@@ -3,492 +3,442 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Портфолио Lolli</title>
-    <!-- Подключение Tailwind CSS -->
+    <title>Для моего солнышка ❤️</title>
+    <!-- Подключаем Tailwind CSS для красивой верстки -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Подключение шрифта Manrope -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- Иконки Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- Добавлены стили и скрипт для подсветки кода Prism.js -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Подключаем изящные шрифты из Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Manrope', sans-serif;
-            background-color: #0b1120; 
-            color: #e2e8f0; 
-            padding-bottom: 100px;
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at center, #1b051a 0%, #0a010c 100%);
             overflow-x: hidden;
-            /* ИЗМЕНЕНИЕ: Новый фон */
-            background-image: url('https://cdn.midjourney.com/28b32c80-23e1-4d45-b3cb-b03dac5f2e6d/0_0.png');
-            background-size: cover;
-            background-position: center center;
-            background-attachment: fixed;
         }
-
-        .liquid-glass {
-            background: rgba(30, 41, 59, 0.4); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        .font-script {
+            font-family: 'Marck Script', cursive;
         }
-
-        .gallery-card {
-            background: rgba(23, 31, 48, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            break-inside: avoid-column;
+        /* Анимация плавного появления текста */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
         }
-        
-        .nav-btn { color: #94a3b8; }
-        .nav-btn.active { color: #60a5fa; }
-
-        .nav-panel {
-            background: rgba(23, 31, 48, 0.65);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        .animate-fade-in {
+            animation: fadeInUp 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-
-        h1, h2 { color: #f8fafc; }
-        .subtle-text { color: #94a3b8; }
-        .form-input::placeholder { color: #64748b; }
-
-        /* --- Стили для чата --- */
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 5px #a78bfa, 0 0 10px #a78bfa; }
-            50% { text-shadow: 0 0 10px #c4b5fd, 0 0 20px #c4b5fd; }
+        .delay-500 {
+            animation-delay: 0.6s;
         }
-        .glowing-text {
-            color: #c4b5fd;
-            animation: glow 3s ease-in-out infinite;
+        .delay-1000 {
+            animation-delay: 1.5s;
         }
-
-        .message-bubble { max-width: 85%; word-wrap: break-word; }
-        .user-bubble { background-color: #3b82f6; color: white; }
-        .model-bubble { background-color: #374151; color: white; }
-        .model-bubble b {
-            color: #c4b5fd;
-            font-weight: 700;
+        /* Пульсирующее свечение для кнопки звука */
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(244, 63, 94, 0.8);
+            }
         }
-        
-        #chat-window { transition: opacity 0.4s ease, transform 0.4s ease; }
-
-        #chat-input::-webkit-scrollbar, #chat-messages::-webkit-scrollbar { display: none; }
-        #chat-input, #chat-messages { scrollbar-width: none; -ms-overflow-style: none; }
-
-        @keyframes rainbow-scroll { to { background-position: 200% center; } }
-        .rainbow-icon {
-            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: rainbow-scroll 3s linear infinite;
-        }
-        
-        .online-tag {
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 9999px;
-            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
-            background-size: 200% auto;
-            animation: rainbow-scroll 3s linear infinite;
-        }
-
-        pre[class*="language-"] {
-            margin: 0;
-            padding: 1rem;
-            border-radius: 1rem;
+        .pulse-glow {
+            animation: pulseGlow 2s infinite;
         }
     </style>
 </head>
-<body class="">
-    <audio id="background-music" src="music.mp3" loop></audio>
+<body class="min-h-screen text-gray-100 flex flex-col justify-between items-center relative overflow-hidden select-none">
 
-    <div id="music-player" class="liquid-glass fixed top-5 left-5 z-20 rounded-full p-1 flex items-center">
-        <button id="play-pause-btn" class="bg-slate-700/90 rounded-full h-10 w-10 flex-shrink-0 flex items-center justify-center shadow-lg">
-            <i id="play-icon" class="ph-bold ph-play text-xl text-sky-300"></i>
-            <i id="pause-icon" class="ph-bold ph-pause text-xl text-sky-300 hidden"></i>
+    <!-- Фоновые мерцающие звёзды -->
+    <div class="absolute inset-0 pointer-events-none opacity-40" id="stars-container"></div>
+
+    <!-- Кнопка включения генеративной музыки -->
+    <div class="absolute top-6 right-6 z-50">
+        <button id="music-btn" class="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-sm font-medium hover:bg-white/20 transition-all active:scale-95 pulse-glow">
+            <span id="music-icon">🎵</span>
+            <span id="music-text">Включить романтическую музыку</span>
         </button>
     </div>
 
-    <main class="relative w-full flex items-center justify-center p-4 min-h-screen">
-        <div id="home-screen" class="screen-content w-full">
-            <div class="w-full max-w-sm md:max-w-md p-6 mx-auto">
-                <div class="flex flex-col items-center text-center">
-                    <img src="https://i.pinimg.com/736x/a0/5b/5e/a05b5ea3d8f6982a2e18a11187325a49.jpg" alt="Аватар Lolli" class="w-28 h-28 object-cover rounded-full border-4 border-slate-500/20 shadow-xl mb-4">
-                    <h1 class="text-3xl font-extrabold">Lolli</h1>
-                    <div class="mt-2 text-base font-medium subtle-text flex flex-wrap justify-center items-center gap-x-3 gap-y-1">
-                        <span><i class="ph-fill ph-cake mr-1"></i> 21 год</span>
-                        <span class="hidden sm:inline">|</span>
-                        <span><i class="ph-fill ph-briefcase mr-1"></i> Опыт более 3-х лет</span>
-                    </div>
-                     <div class="flex justify-center space-x-3 mt-4">
-                       <a href="#" class="liquid-glass text-slate-200 rounded-full w-10 h-10 flex items-center justify-center text-xl hover:bg-slate-600/30"><i class="ph ph-telegram-logo"></i></a>
-                       <a href="#" class="liquid-glass text-slate-200 rounded-full w-10 h-10 flex items-center justify-center text-xl hover:bg-slate-600/30"><i class="ph ph-instagram-logo"></i></a>
-                       <a href="#" class="liquid-glass text-slate-200 rounded-full w-10 h-10 flex items-center justify-center text-xl hover:bg-slate-600/30"><i class="ph ph-tiktok-logo"></i></a>
-                    </div>
-                </div>
-                <div class="w-2/3 h-px bg-slate-600 mx-auto my-5"></div>
-                <div class="text-center">
-                    <h2 class="text-xl font-bold mb-4">Что я создаю</h2>
-                    <div class="flex flex-wrap justify-center gap-2 text-xs md:text-sm">
-                        <span class="liquid-glass rounded-full py-2 px-4 font-semibold hover:scale-105">Креативы</span>
-                        <span class="liquid-glass rounded-full py-2 px-4 font-semibold hover:scale-105">Stories</span>
-                        <span class="liquid-glass rounded-full py-2 px-4 font-semibold hover:scale-105">Анимации</span>
-                        <span class="liquid-glass rounded-full py-2 px-4 font-semibold hover:scale-105">Инфографика</span>
-                        <span class="liquid-glass rounded-full py-2 px-4 font-semibold hover:scale-105">Видео</span>
-                        <span class="liquid-glass rounded-full py-2 px-4 font-semibold hover:scale-105">Стиль</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Интерактивный Canvas для пульсирующего сердца -->
+    <div class="w-full flex-grow flex items-center justify-center relative mt-10">
+        <canvas id="heart-canvas" class="block cursor-pointer absolute"></canvas>
+        <div class="absolute text-center pointer-events-none opacity-60 text-xs text-rose-300/50 animate-pulse bottom-4">
+            Нажми на экран, чтобы подарить искорку ✨
         </div>
-        <div id="gallery-screen" class="screen-content w-full hidden">
-            <div class="w-full max-w-6xl mx-auto px-4">
-                 <div class="text-center mb-8">
-                    <h2 class="liquid-glass rounded-full inline-block py-3 px-8 text-3xl font-bold">Галерея работ</h2>
-                 </div>
-                 <div class="columns-2 lg:columns-3 gap-4">
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/3b/d7/4b/3bd74b2b1d403ee726a2d5d78121b2cf.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/89/1b/bf/891bbfc0c8e294301e54172a4183af91.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/4a/de/11/4ade113d972a0aa33eeb27294a6953b6.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/3f/32/4d/3f324d0a79967a0bc503fe96b24eb920.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/00/14/71/0014717ed53752af2b5bca83f3d81f3a.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/30/e4/7a/30e47a2c529af5134459a8f57acfa898.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/38/e3/f3/38e3f312806e148fc6988d576ed7677e.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/00/af/fa/00affa618e49f39fb8a330dd5d604561.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/43/0c/7e/430c7e8815fbd4b57e188ee4889c18ee.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/24/68/f3/2468f310c6d0d684c87dbfaaa07e9f3c.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/02/de/a5/02dea5c3d76a5da636d5464a014e6f98.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/62/8d/9d/628d9d7f68fb9bcc955205d375282d81.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/42/f4/4a/42f44ae1047e0a37a52286f5b275b5de.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/a0/63/68/a063683899847db93c61d3dcdebc21d3.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/e3/03/64/e30364e261ba3fde336e690736491cac.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/55/b1/6c/55b16cc477dbd0db101b4cdeff7213f8.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/3b/71/35/3b71355d028f5c91f1670839b8fe86c7.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/a4/ab/70/a4ab7095bebcee86259311cd61fc5731.jpg" class="w-full h-full object-cover"></div>
-                    <div class="gallery-card mb-4 p-0 overflow-hidden hover:scale-105 rounded-xl md:rounded-2xl lg:rounded-3xl"><img src="https://i.pinimg.com/736x/0c/8d/d1/0c8dd1dc9ae66fc4ec2f9c140ab3719b.jpg" class="w-full h-full object-cover"></div>
-                 </div>
-            </div>
-        </div>
-        <div id="profile-screen" class="screen-content w-full hidden">
-            <div class="w-full max-w-sm md:max-w-md mx-auto p-6">
-                <h2 class="text-2xl font-bold text-center mb-1">Начнем сотрудничество?</h2>
-                <p class="text-center subtle-text mb-6 text-sm">Оставьте заявку, и я свяжусь с вами.</p>
-                <form action="https://formspree.io/f/mblypegg" method="POST" class="space-y-4">
-                    <div>
-                        <label for="name" class="font-semibold text-sm">Ваше имя</label>
-                        <input type="text" id="name" name="name" required class="form-input mt-1 w-full p-2 rounded-xl liquid-glass border-transparent focus:border-blue-500 focus:bg-slate-600 outline-none">
-                    </div>
-                    <div>
-                        <label for="email" class="font-semibold text-sm">Ваш Email</label>
-                        <input type="email" id="email" name="email" required class="form-input mt-1 w-full p-2 rounded-xl liquid-glass border-transparent focus:border-blue-500 focus:bg-slate-600 outline-none">
-                    </div>
-                    <div>
-                        <label for="message" class="font-semibold text-sm">Опишите задачу</label>
-                        <textarea id="message" name="message" rows="3" required class="form-input mt-1 w-full p-2 rounded-xl liquid-glass border-transparent focus:border-blue-500 focus:bg-slate-600 outline-none"></textarea>
-                    </div>
-                    <button type="submit" class="w-full liquid-glass rounded-full py-2.5 font-bold text-base text-blue-300 hover:bg-slate-600/50">Отправить заявку</button>
-                </form>
-             </div>
-        </div>
-    </main>
-
-    <!-- Модальное окно для изображений -->
-    <div id="fullscreen-modal" class="fixed inset-0 bg-black/80 z-50 hidden justify-center items-center p-4">
-        <img id="fullscreen-image" class="max-w-full max-h-full object-contain">
-        <button id="modal-close" class="absolute top-5 right-5 text-white text-5xl font-bold">&times;</button>
     </div>
 
-    <!-- ЧАТ-ОКНО -->
-    <div id="chat-window" class="fixed inset-0 z-40 p-4 md:inset-auto md:bottom-24 md:right-5 md:w-96 md:max-h-[70vh] md:p-0 md:rounded-3xl flex flex-col liquid-glass opacity-0 -translate-y-4 md:translate-y-4 pointer-events-none">
-        <header class="flex-shrink-0 flex items-center justify-between p-3 border-b border-white/10">
-             <button id="chat-exit-btn" class="text-slate-400 rounded-full w-8 h-8 flex items-center justify-center text-xl hover:bg-slate-600/30">
-                <i class="ph-bold ph-arrow-left"></i>
-             </button>
-             <div class="flex items-center gap-2">
-                 <h2 class="text-lg font-bold">Поддержка</h2>
-                 <span class="online-tag">Online</span>
-             </div>
-             <div class="w-8"></div>
-        </header>
-        <div id="chat-messages" class="flex-grow overflow-y-auto p-4 space-y-4 flex flex-col">
-             <div id="welcome-message" class="text-center p-8 m-auto">
-                <h3 class="text-2xl font-bold glowing-text">Чем могу помочь?</h3>
-             </div>
+    <!-- Текстовое признание -->
+    <div class="w-full max-w-2xl px-6 pb-12 text-center relative z-20">
+        <div class="space-y-6">
+            <p class="animate-fade-in delay-500 text-pink-100/90 text-lg md:text-xl lg:text-2xl leading-relaxed font-light drop-shadow-md">
+                солнышко, я очень рад что ты есть у меня, ведь ты подарила мне новую жизнь. С тобой я чувствую себя самым счастливым человеком)
+            </p>
+            
+            <p class="animate-fade-in delay-1000 font-script text-rose-400 text-4xl md:text-5xl lg:text-6xl tracking-wide pt-2 drop-shadow-[0_0_15px_rgba(244,63,94,0.6)]">
+                Ты моя первая и последняя любовь 🥰❤️‍🩹
+            </p>
         </div>
-        <footer class="flex-shrink-0 p-2">
-            <div id="image-preview-container" class="px-2 pb-2"></div>
-            <form id="chat-form" class="relative flex items-center">
-                <label for="image-upload" class="p-2 cursor-pointer text-slate-400 hover:text-sky-300">
-                    <i class="ph-bold ph-paperclip text-2xl"></i>
-                </label>
-                <input type="file" id="image-upload" class="hidden" accept="image/*">
-                
-                <div class="relative w-full flex items-center">
-                    <textarea id="chat-input" rows="1" class="form-input liquid-glass bg-transparent w-full p-3 pr-12 rounded-full resize-none outline-none border-transparent focus:border-blue-500"></textarea>
-                    <button id="send-btn" type="submit" class="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-sky-300 opacity-0 pointer-events-none transition-opacity duration-300">
-                        <i class="ph-bold ph-paper-plane-tilt text-2xl"></i>
-                    </button>
-                </div>
-            </form>
-        </footer>
     </div>
-
-
-    <footer id="main-footer" class="fixed bottom-0 left-0 right-0 p-4 z-30">
-        <div class="flex items-end justify-center gap-2">
-            <div class="liquid-glass relative max-w-[15rem] sm:max-w-xs rounded-full p-2 flex justify-around items-center">
-                <div id="slider" class="absolute h-12 bg-slate-700/90 rounded-3xl shadow-lg transition-all duration-700 ease-in-out"></div>
-                <button id="nav-home" class="nav-btn relative z-10 flex justify-center items-center rounded-full h-12 w-16 sm:w-20"><i class="ph-bold ph-house text-3xl"></i></button>
-                <button id="nav-gallery" class="nav-btn relative z-10 flex justify-center items-center rounded-full h-12 w-16 sm:w-20"><i class="ph-bold ph-squares-four text-3xl"></i></button>
-                <button id="nav-profile" class="nav-btn relative z-10 flex justify-center items-center rounded-full h-12 w-16 sm:w-20"><i class="ph-bold ph-user text-3xl"></i></button>
-            </div>
-            <button id="chat-open-btn" class="liquid-glass rounded-full w-16 h-16 flex-shrink-0 flex items-center justify-center text-xl transition-opacity duration-300">
-                 <i class="ph-bold ph-chat-teardrop-dots text-4xl rainbow-icon"></i>
-            </button>
-        </div>
-    </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const screens = document.querySelectorAll('.screen-content');
-            const navButtons = document.querySelectorAll('.nav-btn');
-            const slider = document.getElementById('slider');
-            const navPanel = slider.parentElement;
-            const audioPlayer = document.getElementById('background-music');
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            const playIcon = document.getElementById('play-icon');
-            const pauseIcon = document.getElementById('pause-icon');
-            const chatWindow = document.getElementById('chat-window');
-            const chatOpenBtn = document.getElementById('chat-open-btn');
-            const chatExitBtn = document.getElementById('chat-exit-btn');
-            const chatForm = document.getElementById('chat-form');
-            const chatInput = document.getElementById('chat-input');
-            const sendBtn = document.getElementById('send-btn');
-            const chatMessages = document.getElementById('chat-messages');
-            const welcomeMessage = document.getElementById('welcome-message');
-            const imageUploadInput = document.getElementById('image-upload');
-            const imagePreviewContainer = document.getElementById('image-preview-container');
-            const modal = document.getElementById('fullscreen-modal');
-            const modalImage = document.getElementById('fullscreen-image');
-            const modalClose = document.getElementById('modal-close');
+        // Инициализация Canvas
+        const canvas = document.getElementById('heart-canvas');
+        const ctx = canvas.getContext('2d');
 
-            const GEMINI_API_KEY = "AIzaSyAfukPDZRpxp3Ayds6gmd2mz5tc7qkmNxA"; 
-            const systemInstructionText = "Ты — ассистент-помощник дизайнера по имени Lolli. Твоя задача — вежливо и профессионально отвечать на вопросы потенциальных клиентов. Ты также можешь анализировать изображения, которые присылает пользователь, и давать советы по их улучшению. Всегда отвечай от лица ассистента, а не от имени Lolli (он парень). Вот информация, которую ты должен использовать:\n- Имя дизайнера: Lolli\n- Возраст: 21 год\n- Опыт работы: более 3 лет\n- Количество работ в портфолио: 19\n- Где оставить заявку: на странице 'Профиль', доступной через иконку пользователя в нижней панели навигации.\n- Важное требование к заявке: только если клиент спрашивает, как заказать проект или связаться, напомни ему, что в заявке важно указать свой номер телефона или ник в Telegram для обратной связи.";
-            
-            let chatHistory = [];
-            let isFirstMessage = true;
-            let uploadedImageData = null;
+        let width = canvas.width = Math.min(window.innerWidth, 600);
+        let height = canvas.height = Math.min(window.innerHeight * 0.55, 450);
 
-            function toggleChat(isOpen) {
-                chatWindow.classList.toggle('opacity-0', !isOpen);
-                chatWindow.classList.toggle('pointer-events-none', !isOpen);
-                chatWindow.classList.toggle('-translate-y-4', !isOpen);
-                chatWindow.classList.toggle('md:translate-y-4', !isOpen);
-                chatOpenBtn.classList.toggle('opacity-0', isOpen);
-                chatOpenBtn.classList.toggle('pointer-events-none', isOpen);
+        window.addEventListener('resize', () => {
+            width = canvas.width = Math.min(window.innerWidth, 600);
+            height = canvas.height = Math.min(window.innerHeight * 0.55, 450);
+        });
+
+        // Создание фонового мерцания звёзд
+        const starsContainer = document.getElementById('stars-container');
+        for (let i = 0; i < 60; i++) {
+            const star = document.createElement('div');
+            star.className = 'absolute bg-white rounded-full';
+            star.style.width = Math.random() * 2 + 'px';
+            star.style.height = star.style.width;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animation = `pulse ${2 + Math.random() * 4}s infinite ease-in-out`;
+            star.style.opacity = Math.random();
+            starsContainer.appendChild(star);
+        }
+
+        // --- Математическая модель сердца ---
+        function getHeartPoint(t) {
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+            return { x, y };
+        }
+
+        // Класс трассирующей частицы (трассера)
+        class Tracer {
+            constructor(offsetAngle) {
+                this.angle = offsetAngle;
+                this.speed = 0.015 + Math.random() * 0.01;
+                this.size = 1.5 + Math.random() * 2;
+                this.color = this.getRandomColor();
+                this.history = [];
+                this.maxHistory = 15 + Math.floor(Math.random() * 15);
             }
-            
-            chatOpenBtn.addEventListener('click', () => toggleChat(true));
-            chatExitBtn.addEventListener('click', () => toggleChat(false));
 
-            imageUploadInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        const imageDataUrl = event.target.result;
-                        uploadedImageData = imageDataUrl.split(',')[1];
-                        imagePreviewContainer.innerHTML = `<div class="relative inline-block"><img src="${imageDataUrl}" class="h-16 w-16 object-cover rounded-lg"><button id="cancel-upload" class="absolute -top-2 -right-2 bg-red-500 rounded-full h-6 w-6 flex items-center justify-center text-white">&times;</button></div>`;
-                        document.getElementById('cancel-upload').addEventListener('click', () => {
-                            uploadedImageData = null;
-                            imagePreviewContainer.innerHTML = '';
-                            imageUploadInput.value = '';
-                             chatInput.dispatchEvent(new Event('input'));
-                        });
-                        chatInput.dispatchEvent(new Event('input'));
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+            getRandomColor() {
+                const colors = [
+                    'rgba(244, 63, 94, ',  // Розовый/Красный
+                    'rgba(236, 72, 153, ', // Насыщенный розовый
+                    'rgba(217, 70, 239, ', // Пурпурный
+                    'rgba(251, 113, 133, ' // Светло-розовый
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
 
-            chatInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    chatForm.dispatchEvent(new Event('submit'));
+            update(pulseScale) {
+                this.angle += this.speed;
+                if (this.angle > Math.PI * 2) {
+                    this.angle = 0;
                 }
-            });
 
-            chatInput.addEventListener('input', () => {
-                const hasText = chatInput.value.trim().length > 0 || uploadedImageData;
-                sendBtn.classList.toggle('opacity-0', !hasText);
-                sendBtn.classList.toggle('pointer-events-none', !hasText);
-            });
+                const basePos = getHeartPoint(this.angle);
+                const scale = (Math.min(width, height) / 40) * pulseScale;
+                const targetX = width / 2 + basePos.x * scale;
+                const targetY = height / 2.1 + basePos.y * scale;
 
-            chatForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const userMessage = chatInput.value.trim();
-                if (userMessage || uploadedImageData) {
-                    handleUserMessage(userMessage);
-                    imagePreviewContainer.innerHTML = '';
+                this.history.push({ x: targetX, y: targetY });
+                if (this.history.length > this.maxHistory) {
+                    this.history.shift();
                 }
-            });
-            
-            function handleUserMessage(message) {
-                if (isFirstMessage) {
-                    welcomeMessage.style.display = 'none';
-                    isFirstMessage = false;
-                }
-                const userParts = [];
-                if (message) userParts.push({ text: message });
-                if (uploadedImageData) {
-                    userParts.push({ inlineData: { mimeType: 'image/jpeg', data: uploadedImageData } });
-                    appendMessage({ type: 'image', src: `data:image/jpeg;base64,${uploadedImageData}` }, 'user');
-                    uploadedImageData = null;
-                }
-                if (message) {
-                    appendMessage({ type: 'text', content: message }, 'user');
+            }
+
+            draw() {
+                if (this.history.length < 2) return;
+
+                ctx.beginPath();
+                ctx.moveTo(this.history[0].x, this.history[0].y);
+                for (let i = 1; i < this.history.length; i++) {
+                    ctx.lineTo(this.history[i].x, this.history[i].y);
                 }
                 
-                if (userParts.length > 0) {
-                    chatHistory.push({ role: 'user', parts: userParts });
-                    getGeminiResponse();
-                }
-                chatInput.value = '';
-                chatInput.dispatchEvent(new Event('input'));
+                ctx.strokeStyle = this.color + '0.6)';
+                ctx.lineWidth = this.size;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+
+                const head = this.history[this.history.length - 1];
+                ctx.beginPath();
+                ctx.arc(head.x, head.y, this.size + 1.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff';
+                ctx.shadowColor = this.color + '1)';
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        // Класс искры (взрыв при клике/касании)
+        class Sparkle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 2 + Math.random() * 4;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.life = 1.0;
+                this.decay = 0.015 + Math.random() * 0.02;
+                this.size = 1 + Math.random() * 3;
+                this.color = Math.random() > 0.5 ? '#f43f5e' : '#fda4af';
             }
 
-            function parseAndAppend(fullResponse, modelBubble) {
-                const formattedResponse = fullResponse.replace(/\*\*(.*?)\*\*/g, '<b class="text-purple-400 font-semibold">$1</b>');
-                modelBubble.innerHTML = formattedResponse;
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.05;
+                this.life -= this.decay;
             }
 
-            function appendMessage(content, sender) {
-                const messageWrapper = document.createElement('div');
-                messageWrapper.className = `w-full flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-                let messageBubble;
-                if (content.type === 'image') {
-                    messageBubble = document.createElement('img');
-                    messageBubble.src = content.src;
-                    messageBubble.className = 'w-48 h-auto rounded-2xl cursor-pointer';
-                    messageBubble.addEventListener('click', () => openModal(content.src));
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.life;
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+            }
+        }
+
+        const tracersCount = 75;
+        const tracers = [];
+        for (let i = 0; i < tracersCount; i++) {
+            tracers.push(new Tracer((i / tracersCount) * Math.PI * 2));
+        }
+
+        const sparkles = [];
+
+        let time = 0;
+        function getPulseScale() {
+            time += 0.04;
+            const heartbeat = Math.sin(time) * 0.6 + Math.sin(time * 2) * 0.4;
+            return 1 + Math.max(0, heartbeat) * 0.12;
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(10, 1, 12, 0.18)';
+            ctx.fillRect(0, 0, width, height);
+
+            const pulseScale = getPulseScale();
+
+            ctx.globalCompositeOperation = 'screen';
+            tracers.forEach(tracer => {
+                tracer.update(pulseScale);
+                tracer.draw();
+            });
+            ctx.globalCompositeOperation = 'source-over';
+
+            for (let i = sparkles.length - 1; i >= 0; i--) {
+                const s = sparkles[i];
+                s.update();
+                if (s.life <= 0) {
+                    sparkles.splice(i, 1);
                 } else {
-                    messageBubble = document.createElement('div');
-                    messageBubble.className = `message-bubble p-3 rounded-2xl ${sender === 'user' ? 'user-bubble' : 'model-bubble'}`;
-                    messageBubble.innerHTML = content.content || content;
+                    s.draw();
                 }
-                messageWrapper.appendChild(messageBubble);
-                chatMessages.appendChild(messageWrapper);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                return messageBubble;
             }
 
-             function openModal(src) {
-                modalImage.src = src;
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
+            requestAnimationFrame(animate);
+        }
+
+        function createExplosion(x, y) {
+            for (let i = 0; i < 25; i++) {
+                sparkles.push(new Sparkle(x, y));
             }
-            
-            modalClose.addEventListener('click', () => {
-                 modal.classList.add('hidden');
-                 modal.classList.remove('flex');
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            createExplosion(e.clientX - rect.left, e.clientY - rect.top);
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            createExplosion(touch.clientX - rect.left, touch.clientY - rect.top);
+        });
+
+        window.onload = function() {
+            animate();
+        };
+
+        // --- НОВЫЙ ГЕНЕРАТОР РОМАНТИЧЕСКОЙ МУЗЫКИ (Web Audio API) ---
+        let audioCtx = null;
+        let isPlaying = false;
+        let scheduleTimer = null;
+        let currentChordIndex = 0;
+
+        // Романтическая прогрессия аккордов: Cmaj7 - Am9 - Fmaj7 - G6
+        const chords = [
+            [130.81, 196.00, 246.94, 261.63, 329.63, 392.00], // Cmaj7 (C3, G3, B3, C4, E4, G4)
+            [110.00, 164.81, 220.00, 261.63, 329.63, 440.00], // Am9 (A2, E3, A3, C4, E4, A4)
+            [87.31,  130.81, 174.61, 218.08, 261.63, 349.23], // Fmaj7 (F2, C3, F3, A3, C4, F4)
+            [98.00,  146.83, 196.00, 246.94, 293.66, 392.00]  // G6 (G2, D3, G3, B3, D4, G4)
+        ];
+
+        // Романтические мелодические ноты (Пентатоника C-Major с нежными переходами)
+        const melodyNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00];
+
+        // 1. Создание фонового мягкого "синтезаторного" пад-аккорда
+        function playWarmPad(chordFreqs) {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime;
+            const duration = 5.0; // Длительность звучания аккорда
+
+            chordFreqs.forEach((freq, index) => {
+                // Создаем осцилляторы для каждой ноты аккорда
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                const filter = audioCtx.createBiquadFilter();
+
+                // Используем мягкую треугольную волну
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now);
+                // Слегка расстраиваем ноты для живого и глубокого "хорус" звучания
+                osc.detune.setValueAtTime((Math.random() - 0.5) * 12, now); 
+
+                filter.type = 'lowpass';
+                // Очень мягкий фильтр для бархатного звука
+                filter.frequency.setValueAtTime(400, now);
+                filter.frequency.exponentialRampToValueAtTime(200, now + duration);
+
+                // Плавная романтичная атака (аккорд разгоняется медленно)
+                gainNode.gain.setValueAtTime(0, now);
+                gainNode.gain.linearRampToValueAtTime(0.04, now + 2.0); // Медленное нарастание
+                gainNode.gain.setValueAtTime(0.04, now + duration - 2.0);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration); // Очень медленный спад
+
+                osc.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + duration + 0.1);
             });
+        }
 
-            async function getGeminiResponse() {
-                if (!GEMINI_API_KEY) {
-                    appendMessage({content: "Ошибка: API ключ не предоставлен."}, "model");
-                    return;
-                }
-                const modelBubble = appendMessage({ content: ''}, 'model');
-                modelBubble.innerHTML = '<div class="h-2 w-2 bg-slate-400 rounded-full animate-pulse"></div>';
-                try {
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:streamGenerateContent?key=${GEMINI_API_KEY}&alt=sse`;
+        // 2. Создание нежных мерцающих колокольчиков поверх аккорда
+        function playRomanticChime() {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime;
+            
+            // Выбираем красивую ноту из гаммы
+            const freq = melodyNotes[Math.floor(Math.random() * melodyNotes.length)];
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            const filter = audioCtx.createBiquadFilter();
+
+            // Синусоидальная волна дает кристально чистый нежный звук
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(1000, now);
+
+            // Настройка деликатного затухания
+            gainNode.gain.setValueAtTime(0, now);
+            gainNode.gain.linearRampToValueAtTime(0.07, now + 0.15); // Мягкое касание струны
+            gainNode.gain.exponentialRampToValueAtTime(0.001, now + 3.5); // Бесконечное эхо
+
+            // Создаем пространственное эхо (Delay)
+            const delay = audioCtx.createDelay();
+            delay.delayTime.setValueAtTime(0.5, now); // Полсекунды задержки
+
+            const feedback = audioCtx.createGain();
+            feedback.gain.setValueAtTime(0.35, now); // Громкость повторов
+
+            // Эхо-петля
+            delay.connect(feedback);
+            feedback.connect(delay);
+
+            osc.connect(filter);
+            filter.connect(gainNode);
+
+            // Направляем звук в динамики и на линию задержки
+            gainNode.connect(audioCtx.destination);
+            gainNode.connect(delay);
+            delay.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + 4.0);
+        }
+
+        // 3. Планировщик музыки
+        function startMusicScheduler() {
+            let lastChordTime = 0;
+
+            function musicLoop() {
+                if (!isPlaying) return;
+                
+                const now = Date.now();
+
+                // Каждые 4.5 секунды меняем фоновый аккорд
+                if (now - lastChordTime >= 4500) {
+                    const currentChord = chords[currentChordIndex];
+                    playWarmPad(currentChord);
                     
-                    const payload = {
-                        "contents": [...chatHistory],
-                        "systemInstruction": { "parts": [{ "text": systemInstructionText }] }
-                    };
-                    
-                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    if (!response.ok) throw new Error(`HTTP error ${response.status}: ${await response.text()}`);
-                    const reader = response.body.getReader();
-                    const decoder = new TextDecoder();
-                    let buffer = '', fullResponse = '';
-                    modelBubble.innerHTML = '';
-                    while (true) {
-                        const { value, done } = await reader.read();
-                        if (done) break;
-                        buffer += decoder.decode(value, { stream: true });
-                        const lines = buffer.split('\n');
-                        buffer = lines.pop() || '';
-                        for (const line of lines) {
-                            if (line.startsWith('data: ')) {
-                                const jsonStr = line.substring(6);
-                                try {
-                                    const parsed = JSON.parse(jsonStr);
-                                    const textPart = parsed.candidates[0]?.content?.parts[0]?.text;
-                                    if(textPart){
-                                        fullResponse += textPart;
-                                        parseAndAppend(fullResponse, modelBubble);
-                                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                                    }
-                                } catch (e) { /* Ignore incomplete JSON */ }
-                            }
-                        }
-                    }
-                    if (fullResponse) {
-                        chatHistory.push({ role: 'model', parts: [{ text: fullResponse }] });
-                    } else {
-                         modelBubble.textContent = "Не удалось получить ответ.";
-                    }
-                } catch (error) {
-                    modelBubble.textContent = "Произошла ошибка. Проверьте API-ключ или попробуйте снова.";
-                    console.error("Error fetching Gemini response:", error);
+                    currentChordIndex = (currentChordIndex + 1) % chords.length;
+                    lastChordTime = now;
                 }
+
+                // Случайным образом воспроизводим нежный хрустальный колокольчик
+                if (Math.random() < 0.6) {
+                    playRomanticChime();
+                }
+
+                // Шаг планировщика (каждые 1-2 секунды)
+                const nextInterval = 1000 + Math.random() * 1200;
+                scheduleTimer = setTimeout(musicLoop, nextInterval);
             }
             
-            playPauseBtn.addEventListener('click', () => {
-                const isPlaying = audioPlayer.paused;
-                if (isPlaying) {
-                    audioPlayer.play();
-                } else {
-                    audioPlayer.pause();
-                }
-                playIcon.classList.toggle('hidden', !isPlaying);
-                pauseIcon.classList.toggle('hidden', isPlaying);
-            });
+            lastChordTime = 0; // Сброс времени при старте
+            musicLoop();
+        }
 
-            const navMapping = { 'nav-home': 'home-screen', 'nav-gallery': 'gallery-screen', 'nav-profile': 'profile-screen' };
-            function showScreen(screenId, clickedButton) {
-                screens.forEach(screen => screen.classList.add('hidden'));
-                document.getElementById(screenId)?.classList.remove('hidden');
-                navButtons.forEach(btn => btn.classList.remove('active'));
-                clickedButton.classList.add('active');
-                const buttonRect = clickedButton.getBoundingClientRect();
-                const panelRect = slider.parentElement.getBoundingClientRect();
-                slider.style.width = `${buttonRect.width - 4}px`;
-                slider.style.left = `${(buttonRect.left - panelRect.left) + 2}px`;
+        // Обработчик кнопки проигрывания
+        const musicBtn = document.getElementById('music-btn');
+        const musicIcon = document.getElementById('music-icon');
+        const musicText = document.getElementById('music-text');
+
+        musicBtn.addEventListener('click', () => {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
 
-            navButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetScreenId = navMapping[button.id];
-                    if (targetScreenId) showScreen(targetScreenId, button);
-                });
-            });
-            
-            setTimeout(() => showScreen('home-screen', document.getElementById('nav-home')), 50);
+            if (!isPlaying) {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                isPlaying = true;
+                startMusicScheduler();
+                musicBtn.classList.remove('pulse-glow');
+                musicIcon.textContent = '⏸️';
+                musicText.textContent = 'Выключить музыку';
+            } else {
+                clearTimeout(scheduleTimer);
+                isPlaying = false;
+                musicBtn.classList.add('pulse-glow');
+                musicIcon.textContent = '🎵';
+                musicText.textContent = 'Включить романтическую музыку';
+            }
         });
     </script>
 </body>
